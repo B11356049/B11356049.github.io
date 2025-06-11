@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>原住民音樂</title>
+  <style>
+    /* === 基礎設定 === */
+    body {
+      font-family: "Noto Serif TC", serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff9f0; /* 主背景色，柔和米白 */
+      color: #2c3e50; /* 文字主色，深藍，利於閱讀 */
+      line-height: 1.6;
+    }
+
+    /* === 頁首 header ===
+      背景使用原住民風景圖，文字用活潑橘黃並加陰影 */
+    header {
+      background: url('原住民.jpg') center/cover no-repeat;
+      color: #fff;
+      padding: 4rem 2rem;
+      text-align: center;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+    }
+
+    /* header 主標題 */
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* header 副標題 */
+    header p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* === 導覽列 nav ===
+      固定置頂，半透明白底，增加陰影 */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      z-index: 10000;
+      font-weight: 600;
+      font-family: "Noto Serif TC", serif;
+      user-select: none;
+    }
+
+    /* 導覽列內容容器，flex 置中並兩端對齊 */
+    .nav-container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* 導覽列標題，活潑翠綠 */
+    .nav-title {
+      font-size: 1.5rem;
+      color: #27ae60;
+    }
+
+    /* 漢堡選單按鈕 */
+    .hamburger {
+      cursor: pointer;
+      width: 30px;
+      height: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 4px;
+      background: #27ae60;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* 漢堡動畫，開啟時變成 X */
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* 導覽選單預設隱藏，從右側滑入 */
+    .nav-links {
+      position: fixed;
+      top: 3.5rem;
+      right: 0;
+      width: 200px;
+      background: #fff;
+      box-shadow: -3px 3px 8px rgba(0,0,0,0.1);
+      border-radius: 0 0 0 8px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      font-size: 1.1rem;
+      padding: 1rem 0;
+    }
+
+    .nav-links.active {
+      transform: translateX(0);
+    }
+
+    /* 導覽選單連結 */
+    .nav-links a {
+      display: block;
+      padding: 0.75rem 1.5rem;
+      color: #27ae60;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      background: #f39c12;
+      color: #fff;
+    }
+
+    /* === 主體內容 main === */
+    main {
+      max-width: 800px;
+      margin: 7rem auto 3rem;
+      padding: 0 1rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    /* 主要標題，橘色調，左邊加粗條 */
+    h2 {
+      color: #e67e22;
+      border-left: 5px solid #f39c12;
+      padding-left: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* iframe 和圖片樣式 */
+    iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    img {
+      display: block;
+      margin: 1rem auto 0;
+      border-radius: 8px;
+      max-width: 100%;
+      height: auto;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+    }
+
+    /* 頁腳 */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #e9e4d4;
+      font-size: 0.9rem;
+      color: #5a4d3a;
+      user-select: none;
+    }
+
+    /* === 文化小知識輪播 === */
+    #carousel {
+      max-width: 800px;
+      margin: 2rem auto 4rem;
+    }
+
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: #fff;
+      padding: 1rem 2rem;
+    }
+
+    .carousel-slide {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .carousel-slide > div {
+      min-width: 100%;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    .carousel-slide h3 {
+      margin-top: 0;
+      color: #e67e22;
+    }
+
+    .carousel-slide p {
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    /* 輪播按鈕 */
+    #prev, #next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: #e67e22;
+      cursor: pointer;
+      user-select: none;
+      padding: 0 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    #prev:hover, #next:hover {
+      color: #d35400;
+    }
+
+    #prev {
+      left: 10px;
+    }
+
+    #next {
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <div class="nav-title">屏東原住民族音樂</div>
+      <div class="hamburger" id="hamburger" aria-label="切換選單" role="button" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="nav-links" id="nav-links" aria-hidden="true">
+        <a href="index.html">首頁</a>
+        <a href="../1.html">恆春民謠</a>
+        <a href="../2.html">客家音樂</a>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <h1>屏東原住民族音樂</h1>
+    <p>聆聽山海之聲，感受傳統與靈魂的共鳴</p>
+  </header>
+
+  <main>
+    <!-- 文化小知識輪播 -->
+    <section id="carousel" aria-label="原住民族文化小知識輪播">
+      <h2>✨ 原住民族文化小知識</h2>
+      <div class="carousel-container">
+        <div class="carousel-slide">
+          <div>
+            <h3>排灣族鼻笛 🎵</h3>
+            <p>鼻笛是排灣族傳統樂器，吹奏時能傳達情感與故事。</p>
+          </div>
+          <div>
+            <h3>魯凱族服飾 👘</h3>
+            <p>魯凱族的服飾圖騰象徵祖先與自然的連結。</p>
+          </div>
+          <div>
+            <h3>卑南族祭典 🔥</h3>
+            <p>卑南族的豐年祭是感謝祖靈與大地的盛大慶典。</p>
+          </div>
+        </div>
+        <button id="prev" aria-label="上一則">‹</button>
+        <button id="next" aria-label="下一則">›</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>🌄 地域與族群</h2>
+      <p>
+        屏東縣是台灣多個原住民族群的聚居地，包括排灣族、魯凱族、卑南族等。這些族群各自擁有獨特的音樂風格，歌聲中蘊含著祖靈信仰、歷史故事與自然景觀。
+      </p>
+    </section>
+
+    <section>
+      <h2>🎶 特色與樂器</h2>
+      <p>
+        屏東原住民族音樂常以口傳方式保存，使用多種傳統樂器，如鼻笛、打擊樂器等，音樂節奏多變且富有生命力，常用於祭典、歌唱比賽及日常生活。
+      </p>
+    </section>
+
+    <section>
+      <h2>🎤 麵包 咖哩 刺蝟</h2>
+      <iframe src="https://www.youtube.com/embed/E3o9EP2xFxw?si=AZ7QT2KKl91jXnvX" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen title="戴曉君 泰武古瑤傳唱"></iframe>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 屏東原住民族音樂介紹網站
+  </footer>
+
+  <script>
+    // 漢堡選單開關
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+      const expanded = hamburger.classList.contains('active');
+      navLinks.setAttribute('aria-hidden', !expanded);
+    });
+
+    // 輪播邏輯
+    const slide = document.querySelector('.carousel-slide');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const totalSlides = slide.children.length;
+    let currentIndex = 0;
+
+    function updateSlide() {
+      slide.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateSlide();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateSlide();
+    });
+
+    // 讓漢堡選單支援鍵盤 Enter 鍵切換
+    hamburger.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        hamburger.click();
+      }
+    });
+  </script>
+</body>
+</html>
